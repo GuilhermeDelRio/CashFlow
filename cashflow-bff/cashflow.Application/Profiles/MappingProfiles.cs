@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
+using cashflow.Application.UseCases.Expenses.Reponses;
 using cashflow.Domain.Entities;
 
 namespace cashflow.Application.Profiles;
@@ -10,6 +11,6 @@ public class MappingProfiles : Profile
     {
         // Expenses
         CreateMap<CreateExpenseRequest, Expense>();
-        CreateMap<Expense, CreateExpenseResponse>();
+        CreateMap<Expense, ExpenseResponse>().ReverseMap();
     }
 }

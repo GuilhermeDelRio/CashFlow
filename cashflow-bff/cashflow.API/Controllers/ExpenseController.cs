@@ -1,5 +1,7 @@
 ﻿using cashflow.API.Custom;
 using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
+using cashflow.Application.UseCases.Expenses.Queries.GetAllExpenses;
+using cashflow.Application.UseCases.Expenses.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,8 +18,8 @@ public class ExpenseController : CustomReturnController
         _mediator = mediator;
     }
 
-    [HttpPost(Name = "CreateExpense")]
-    public async Task<ActionResult<CreateExpenseResponse>> Create
+    [HttpPost("CreateExpense", Name = "CreateExpense")]
+    public async Task<ActionResult<ExpenseResponse>> Create
         ([FromBody] CreateExpenseRequest request, CancellationToken cancellationToken)
     {
         try
@@ -29,5 +31,13 @@ public class ExpenseController : CustomReturnController
         {
             return ResultHandler(ex);
         }
+    }
+
+    [HttpGet("GetAllExpenses", Name = "GetAllExpenses")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<ExpenseResponse>> GetAllExpenses(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetAllExpensesQuery(), cancellationToken);
+        return Ok(response);
     }
 }

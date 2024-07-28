@@ -3,10 +3,11 @@ using cashflow.Domain.Entities;
 using cashflow.Domain.Interfaces;
 using AutoMapper;
 using FluentValidation;
+using cashflow.Application.UseCases.Expenses.Reponses;
 
 namespace cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 
-public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, CreateExpenseResponse>
+public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, ExpenseResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IExpensesRepository _expensesRepository;
@@ -19,7 +20,7 @@ public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, Create
         _mapper = mapper;
     }
 
-    public async Task<CreateExpenseResponse> Handle(CreateExpenseRequest request, CancellationToken cancellationToken)
+    public async Task<ExpenseResponse> Handle(CreateExpenseRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateExpenseValidator();
         var validatorResult = await validator.ValidateAsync(request, cancellationToken);
@@ -35,6 +36,6 @@ public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, Create
 
         await _unitOfWork.Commit(cancellationToken);
 
-        return _mapper.Map<CreateExpenseResponse>(expenses);
+        return _mapper.Map<ExpenseResponse>(expenses);
     }
 }
