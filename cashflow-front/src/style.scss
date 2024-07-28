@@ -1,0 +1,31 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+
+  --primary: #012E40;
+  --secondary: #022938;
+  --lightfont: #FFF;
+  --menubutton: #3CA6A6;
+  --grey: #64748b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--primary);
+}
+
+button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+}
+
+h1 {
+  color: var(--lightfont);
+}
