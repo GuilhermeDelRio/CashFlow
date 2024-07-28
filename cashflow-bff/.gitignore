@@ -1,0 +1,136 @@
+# Compiled object files
+*.o
+*.i
+*.ii
+*.ll
+*.s
+*.su
+*.swp
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.ipa
+*.apk
+*.pbxproj
+
+# Packages
+*.tar.gz
+*.deb
+*.rpm
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.mar
+*.rar
+*.zip
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Visual Studio
+.vs/
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono auto generated files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# VS Code directories
+.vscode/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# ASP.NET Core SignalR
+*.hubs
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# .NET
+# Exclude build output directories
+[Bb]in/
+[Oo]bj/
+
+# Uncomment if using .NET Core
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Exclude NuGet Packages
+*.nupkg
+# Uncomment if using NuGet / Visual Studio Package Restore
+# packages/*
+# Uncomment if using NuGet PackageReference
+# **/packages/**
+
+# Exclude SDK
+*.swp
+.swm
+packages
+
+# Include if using a tool like dotnet-format
+# .editorconfig
+
+# Uncomment if using toolsets/Tooling
+# .dotnet_tool/*.csproj
+# .dotnet_tool/*.fsproj
+# .dotnet_tool/*.vbproj
+
+# Include Visual Studio specific files
+.vs/
+
+# Include .NET tools folder
+.dotnet_tools/
+.dotnet_tool/
