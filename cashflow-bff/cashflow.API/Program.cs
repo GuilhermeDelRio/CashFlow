@@ -1,5 +1,17 @@
+using cashflow.Application;
+using cashflow.Persistence;
+
 var builder = WebApplication.CreateBuilder(args);
 
+// CORS
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder => {
+    builder.AllowAnyOrigin()
+      .AllowAnyMethod()
+      .AllowAnyHeader();
+}));
+
+builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 // Add services to the container.
 
 builder.Services.AddControllers();

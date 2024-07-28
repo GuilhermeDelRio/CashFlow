@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace cashflow.Persistence.Configurations;
 
-public class ExpensesConfig : IEntityTypeConfiguration<Expenses>
+public class ExpensesConfig : IEntityTypeConfiguration<Expense>
 {
-    public void Configure(EntityTypeBuilder<Expenses> builder)
+    public void Configure(EntityTypeBuilder<Expense> builder)
     {
         builder.ToTable("TB_Expenses");
 
@@ -29,7 +29,8 @@ public class ExpensesConfig : IEntityTypeConfiguration<Expenses>
 
         builder.Property(x => x.Recurrence)
             .HasColumnName("Recurrence")
-            .HasConversion<string>();
+            .HasConversion<string>()
+            .IsRequired();
 
         builder.Property(x => x.InitialDate)
          .HasColumnName("InitialDate")

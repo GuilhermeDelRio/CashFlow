@@ -1,6 +1,8 @@
-﻿namespace cashflow.Persistence.Repositories;
+﻿using cashflow.Domain.Interfaces;
 
-public class UnitOfWork
+namespace cashflow.Persistence.Repositories;
+
+public class UnitOfWork : IUnitOfWork
 {
     private readonly AppDbContext _context;
 

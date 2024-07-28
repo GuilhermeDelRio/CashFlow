@@ -4,7 +4,7 @@ using cashflow.Domain.Enums;
 
 namespace cashflow.Domain.Entities;
 
-public class Expenses : AuditableEntity
+public class Expense : AuditableEntity
 {
     public string ExpenseName { get; set; }
     public decimal Value { get; set; }

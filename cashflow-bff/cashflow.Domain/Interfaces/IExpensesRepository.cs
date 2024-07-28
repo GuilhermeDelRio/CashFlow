@@ -2,6 +2,6 @@
 
 namespace cashflow.Domain.Interfaces;
 
-public interface IExpensesRepository : IBaseRepository<Expenses>
+public interface IExpensesRepository : IBaseRepository<Expense>
 {
 }
