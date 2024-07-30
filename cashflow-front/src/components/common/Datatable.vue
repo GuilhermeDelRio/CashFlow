@@ -8,9 +8,10 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 import { capitalizeFirstLetter } from '../../util/util';
+import Expense from '../../models/Expense';
 
 defineProps({
-  columns: Object
+  columns: Array<Expense>
 })
 
 </script>

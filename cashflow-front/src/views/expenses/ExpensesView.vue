@@ -1,24 +1,15 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import Datatable from '../../components/common/Datatable.vue';
+import { useExpensesStore } from '../../store/expensesStore';
+import Expense from '../../models/Expense';
 
-const expenses = [
-  {
-    expense: 'Spotify',
-    value: 21,
-    category: 'lazer',
-    recurrence: 'mensal',
-    initialDate: '20 jun',
-    finalDate: '20 jun'
-  },
-  {
-    expense: 'Noize',
-    value: 21,
-    category: 'lazer',
-    recurrence: 'mensal',
-    initialDate: '20 jun',
-    finalDate: '20 jun'
-  }
-]
+const expenseStore = useExpensesStore();
+const expenses = ref<Expense[]>([]);
+
+onMounted(async () => {
+  expenses.value = await expenseStore.getAllExpenses();
+})
 
 </script>
 

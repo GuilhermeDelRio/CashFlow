@@ -2,11 +2,10 @@
 {
     public enum Recurrence
     {
-        Daily,
-        Weekly,
-        Monthly,
-        biannual,
-        quarterly,
-        Yearly
+        DAILY,
+        WEEKLY,
+        MONTHLY,
+        QUARTERLY,
+        YEARLY
     }
 }
