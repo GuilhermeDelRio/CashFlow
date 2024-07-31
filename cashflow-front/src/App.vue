@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Sidebar from './components/common/Sidebar.vue';
+import DynamicDialog from 'primevue/dynamicdialog';
 </script>
 
 <template>
   <div class='app'>
+    <DynamicDialog />
     <Sidebar />
     <router-view />
   </div>

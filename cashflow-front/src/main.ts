@@ -3,6 +3,7 @@ import { createPinia } from 'pinia';
 import router from './routes';
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
+import DialogService from 'primevue/dialogservice';
 import 'primeicons/primeicons.css'
 import './style.scss';
 import '/node_modules/primeflex/primeflex.css'
@@ -24,5 +25,6 @@ app.use(PrimeVue, {
   }
 });
 
+app.use(DialogService);
 
 app.mount('#app');

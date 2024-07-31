@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-import Expense from "../models/Expense";
 import { useFetch } from "../composables/crudComposable";
+import Expense from "../models/Expense";
 
 export const useExpensesStore = defineStore('expenses', {
   state: () => ({

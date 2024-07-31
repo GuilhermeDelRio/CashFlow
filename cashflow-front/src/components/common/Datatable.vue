@@ -8,11 +8,13 @@ import IconField from 'primevue/iconfield';
 import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 import { capitalizeFirstLetter } from '../../util/util';
-import Expense from '../../models/Expense';
 
 defineProps({
-  columns: Array<Expense>
+  columns: Array,
+  viewName: String
 })
+
+const emits = defineEmits(['open-modal']);
 
 </script>
 
@@ -20,7 +22,13 @@ defineProps({
   <div class="datable-container">
     <Toolbar>
     <template #start>
-      <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" />
+      <Button 
+        @click="$emit('open-modal')"
+        label="New" 
+        icon="pi pi-plus" 
+        severity="success" 
+        class="mr-2" 
+      />
       <Button label="Delete" icon="pi pi-trash" severity="danger" />
     </template>
 
@@ -30,10 +38,10 @@ defineProps({
     </template>
   </Toolbar>
 
-  <DataTable :value="columns">
+  <DataTable :value="columns" :resizable-columns=true>
     <template #header>
       <div class="seach-input">
-        <h2 class="m-0">Expenses</h2>
+        <h2 class="m-0">{{ viewName }}</h2>
         <IconField>
           <InputIcon>
             <i class="pi pi-search" />
