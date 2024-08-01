@@ -4,8 +4,7 @@ import { useDialog } from 'primevue/usedialog';
 import { useExpensesStore } from '../../store/expensesStore';
 import Datatable from '../../components/common/Datatable.vue';
 import Expense from '../../models/Expense';
-import LoginView from '../login/LoginView.vue';
-
+import CreateExpenseModalContent from './fragments/CreateExpenseModalContent.vue';
 const dialog = useDialog();
 const expenseStore = useExpensesStore();
 const expenses = ref<Expense[]>([]);
@@ -15,15 +14,19 @@ onMounted(async () => {
 })
 
 const openModal = () => {
-  dialog.open(LoginView, {
+  dialog.open(CreateExpenseModalContent, {
     props: {
-      header: 'Create expense',
+      header: ' ',
       style: {
         width: '50vw',
+        height: '60vh',
       },
       dismissableMask: true,
       modal: true,
-      draggable: false
+      draggable: false,
+      contentStyle: {
+        'height': '100%',
+      },
     }
   });
 };
@@ -43,5 +46,7 @@ const openModal = () => {
 </template>
 
 <style lang="scss">
-
+h1 {
+  color: var(--lightfont);
+}
 </style>

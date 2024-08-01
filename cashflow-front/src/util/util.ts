@@ -1,3 +1,5 @@
+import { Recurrence } from "../models/Expense";
+
 export const capitalizeFirstLetter = (string: any) => {
   if (!string) return string;
   var newString = separateCamelCase(string);
@@ -6,4 +8,8 @@ export const capitalizeFirstLetter = (string: any) => {
 
 export const separateCamelCase = (str: string) => {
   return str.replace(/([a-z])([A-Z])/g, '$1 $2');
+}
+
+export const getRecurrenceOptions = () => {
+  return Object.values(Recurrence);
 }
