@@ -14,10 +14,15 @@ const mockData = [
 onMounted(() => {
   recurrenceValues.value = getRecurrenceOptions();
 });
+
+const handleSubmit = (event: Event) => {
+  console.log('submit');
+};
+
 </script>
 
 <template>
-  <Vueform size="md" :display-errors="false" class="expense-form">
+  <Vueform size="md" :display-errors="false" class="expense-form" @submit="handleSubmit">
     <StaticElement 
       name="register_title"
       content="Create expense"
