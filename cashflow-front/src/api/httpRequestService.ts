@@ -1,10 +1,14 @@
 import api from './axios'
+import { toast, type ToastOptions } from 'vue3-toastify'
 
 const handleError = (error: string) => {
 }
 
 const handleSuccess = (message: string) => {
   console.log(message)
+  toast.success(message, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+  } as ToastOptions);
 }
 
 const get = async (url: string, _entity: string, config = {}) => {
