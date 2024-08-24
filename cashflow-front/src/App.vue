@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import Toast from 'primevue/toast';
 import Sidebar from './components/common/Sidebar.vue';
 import DynamicDialog from 'primevue/dynamicdialog';
 </script>
 
 <template>
   <div class='app'>
-    <!-- <Toast /> -->
     <DynamicDialog />
     <Sidebar />
     <router-view />

@@ -4,7 +4,6 @@ import router from './routes'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
 import DialogService from 'primevue/dialogservice'
-import ToastService from 'primevue/toastservice'
 import App from './App.vue'
 import 'primeicons/primeicons.css'
 import './style.scss'
@@ -15,7 +14,6 @@ const app = createApp(App)
 
 app.use(router)
 app.use(pinia)
-app.use(ToastService)
 
 app.use(PrimeVue, {
   theme: {
