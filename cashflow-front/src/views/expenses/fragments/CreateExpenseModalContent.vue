@@ -90,7 +90,13 @@ const handleSubmit = async () => {
     finalDate: data.value.finalDate
   } as Expense
 
-  expenseStore.postExpense(request)
+  if (isEditable.value) {
+    console.log('Edit')
+  }
+  else {
+    expenseStore.postExpense(request)
+  }
+  
   resetForm()
 }
 

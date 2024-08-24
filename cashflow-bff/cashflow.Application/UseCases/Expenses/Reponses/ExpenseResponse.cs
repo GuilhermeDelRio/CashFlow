@@ -3,6 +3,7 @@
 namespace cashflow.Application.UseCases.Expenses.Reponses;
 
 public sealed record ExpenseResponse(
+    Guid Id,
     string ExpenseName,
     decimal Value,
     string Category,
