@@ -1,24 +1,21 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import router from './routes';
-import PrimeVue from 'primevue/config';
-import Aura from '@primevue/themes/aura';
-import DialogService from 'primevue/dialogservice';
-import Vueform from '@vueform/vueform';
-import vueformConfig from '../vueform.config';
-import ToastService from 'primevue/toastservice';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import router from './routes'
+import PrimeVue from 'primevue/config'
+import Aura from '@primevue/themes/aura'
+import DialogService from 'primevue/dialogservice'
+import ToastService from 'primevue/toastservice'
+import App from './App.vue'
 import 'primeicons/primeicons.css'
-import './style.scss';
+import './style.scss'
 import '/node_modules/primeflex/primeflex.css'
 
-const pinia = createPinia();
-const app = createApp(App);
+const pinia = createPinia()
+const app = createApp(App)
 
-app.use(router);
-app.use(pinia);
-app.use(Vueform, vueformConfig)
-app.use(ToastService);
+app.use(router)
+app.use(pinia)
+app.use(ToastService)
 
 app.use(PrimeVue, {
   theme: {
@@ -28,8 +25,8 @@ app.use(PrimeVue, {
       darkModeSelector: '',
     }
   }
-});
+})
 
-app.use(DialogService);
+app.use(DialogService)
 
-app.mount('#app');
+app.mount('#app')

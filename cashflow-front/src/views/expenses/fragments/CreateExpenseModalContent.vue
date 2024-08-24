@@ -40,10 +40,14 @@ const data = ref({
 })
 
 const expenseSchema = z.object({
-  expense_name: z.string().min(3, { message: 'Expense name must have at least 3 characters' }),	
-  expense_amount: z.number().min(0.01, { message: 'Expense amount must be greater than 0' }),
-  category: z.object({ name: z.string().min(1, { message: 'Category must be selected' }) }),
-  recurrence: z.object({ name: z.string().min(1, { message: 'Recurrence must be selected' }) }),
+  expense_name: z.string()
+    .min(3, { message: 'Expense name must have at least 3 characters' }),	
+  expense_amount: z.number()
+    .min(0.01, { message: 'Expense amount must be greater than 0' }),
+  category: z.object({ name: z.string()
+    .min(1, { message: 'Category must be selected' }) }),
+  recurrence: z.object({ name: z.string()
+    .min(1, { message: 'Recurrence must be selected' }) }),
   initialDate: z.date(),
   finalDate: z.date()
 })
@@ -70,6 +74,18 @@ const handleSubmit = async () => {
   } as Expense
 
   expenseStore.postExpense(request)
+  resetForm()
+}
+
+const resetForm = () => {
+  data.value = {
+    expense_name: '',
+    expense_amount: 0,
+    category: { name: '' },
+    recurrence: { name: '' },
+    initialDate: new Date(),
+    finalDate: new Date()
+  }
 }
 </script>
 
