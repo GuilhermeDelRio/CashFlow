@@ -24,3 +24,20 @@ export const parseRecurrence = (recurrence: string) => {
       return Recurrence.YEARLY;
   }
 }
+
+export const parseRecurrenceToString = (recurrence: number) => {
+  switch (recurrence) {
+    case 0:
+      return "Daily"
+    case 1:
+      return "Weekly"
+    case 2:
+      return "Monthly"
+    case 3:
+      return "Quarterly"
+    case 4:
+      return "Yearly"
+    default:
+      return "Something went wrong"
+  }
+}

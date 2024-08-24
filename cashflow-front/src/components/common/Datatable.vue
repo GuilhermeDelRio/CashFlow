@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Toolbar from 'primevue/toolbar';
-import Button from 'primevue/button';
-import FileUpload from 'primevue/fileupload';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
-import InputText from 'primevue/inputtext';
-import { capitalizeFirstLetter } from '../../util/util';
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import Toolbar from 'primevue/toolbar'
+import Button from 'primevue/button'
+import FileUpload from 'primevue/fileupload'
+import IconField from 'primevue/iconfield'
+import InputIcon from 'primevue/inputicon'
+import InputText from 'primevue/inputtext'
+import { capitalizeFirstLetter } from '../../util/util'
 
 defineProps({
   columns: Array,
   viewName: String
 })
 
-const emits = defineEmits(['open-modal']);
+const emits = defineEmits(['open-modal'])
 
 </script>
 
@@ -23,7 +23,7 @@ const emits = defineEmits(['open-modal']);
     <Toolbar>
     <template #start>
       <Button 
-        @click="$emit('open-modal')"
+        @click="$emit('open-modal', null, false)"
         label="New" 
         icon="pi pi-plus" 
         severity="success" 
@@ -63,7 +63,14 @@ const emits = defineEmits(['open-modal']);
 
     <Column :exportable="false" style="min-width: 12rem">
       <template #body="slotProps">
-        <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
+        <Button
+          @click="$emit('open-modal', slotProps.data, true)"
+          icon="pi pi-pencil"
+          outlined 
+          rounded 
+          class="mr-2" 
+        />
+
         <Button icon="pi pi-trash" outlined rounded severity="danger" />
       </template>
     </Column>

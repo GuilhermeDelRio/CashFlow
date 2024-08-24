@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { z } from 'zod'
 import { useExpensesStore } from '../../../store/expensesStore'
-import { parseRecurrence } from '../../../util/util'
+import { parseRecurrence, parseRecurrenceToString } from '../../../util/util'
 import useValidation from '../../../composables/useValidation'
 import Expense from '../../../models/Expense'
 
@@ -14,6 +14,23 @@ import DatePicker from 'primevue/datepicker'
 import Button from 'primevue/button'
 
 const expenseStore = useExpensesStore()
+const isEditable = ref(false)
+const dialogRef: any = inject('dialogRef')
+
+onMounted(() => {
+  const params = dialogRef.value.data
+  if (params.selectedExpense) {
+    isEditable.value = true
+    data.value = {
+      expense_name: params.selectedExpense.expenseName,
+      expense_amount: params.selectedExpense.value,
+      category: { name: params.selectedExpense.category },
+      recurrence: { name: parseRecurrenceToString(params.selectedExpense.recurrence) },
+      initialDate: new Date(params.selectedExpense.initialDate),
+      finalDate: new Date(params.selectedExpense.finalDate)
+    }
+  }
+})
 
 const categotyList = ref([
   {name: 'Category 1'},
@@ -168,7 +185,10 @@ const resetForm = () => {
       </div>
 
       <div class="mt-4 form-button">
-        <Button type="submit" label="Create expense"  />
+        <Button 
+          type="submit" 
+          :label="!isEditable ? 'Create expense' : 'Edit expense'" 
+        />
       </div>
       
     </form>

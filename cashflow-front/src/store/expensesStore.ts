@@ -14,6 +14,7 @@ export const useExpensesStore = defineStore('expenses', {
     },
     async postExpense(expense: Expense): Promise<Expense> {
       const response = await httpRequestService.post('/Expense/CreateExpense', expense, 'Expense');	
+      this.expenses = [...this.expenses, response];
       return response;
     }
   }

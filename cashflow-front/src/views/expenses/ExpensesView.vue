@@ -1,22 +1,23 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useDialog } from 'primevue/usedialog';
-import { useExpensesStore } from '../../store/expensesStore';
-import Datatable from '../../components/common/Datatable.vue';
-import Expense from '../../models/Expense';
-import CreateExpenseModalContent from './fragments/CreateExpenseModalContent.vue';
-const dialog = useDialog();
-const expenseStore = useExpensesStore();
-const expenses = ref<Expense[]>([]);
+import { onMounted, ref } from 'vue'
+import { useDialog } from 'primevue/usedialog'
+import { useExpensesStore } from '../../store/expensesStore'
+import Datatable from '../../components/common/Datatable.vue'
+import Expense from '../../models/Expense'
+import CreateExpenseModalContent from './fragments/CreateExpenseModalContent.vue'
+
+const dialog = useDialog()
+const expenseStore = useExpensesStore()
+const expenses = ref<Expense[]>([])
 
 onMounted(async () => {
-  expenses.value = await expenseStore.getAllExpenses();
+  expenses.value = await expenseStore.getAllExpenses()
 })
 
-const openModal = () => {
+const openModal = (expense: Expense, isEditable: Boolean) => {
   dialog.open(CreateExpenseModalContent, {
     props: {
-      header: 'Create Expense',
+      header: !isEditable ? 'Create Expense' : 'Edit Expense',
       style: {
         width: '50vw',
         height: '50vh',
@@ -27,9 +28,12 @@ const openModal = () => {
       contentStyle: {
         'height': '100%',
       },
+    },
+    data: {
+      selectedExpense: expense
     }
-  });
-};
+  })
+}
 
 </script>
 
