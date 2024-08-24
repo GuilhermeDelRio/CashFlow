@@ -38,7 +38,12 @@ const emits = defineEmits(['open-modal'])
       </template>
     </Toolbar>
 
-    <DataTable :value="rows" :resizable-columns="true">
+    <DataTable 
+      :value="rows" 
+      :resizable-columns="true"
+      :paginator="true"
+      :rows="5"
+    >
       <template #header>
         <div class="seach-input">
           <h2 class="m-0">{{ viewName }}</h2>
