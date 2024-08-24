@@ -9,7 +9,6 @@ export const useExpensesStore = defineStore('expenses', {
   actions: {
     async getAllExpenses(): Promise<Expense[]> {
       const response = await httpRequestService.get('/Expense/GetAllExpenses', 'Expense')
-      console.log(response)
       this.expenses = response
       return this.expenses
     },

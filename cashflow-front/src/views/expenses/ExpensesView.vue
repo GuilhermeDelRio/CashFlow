@@ -10,9 +10,14 @@ const dialog = useDialog()
 const expenseStore = useExpensesStore()
 const expenses = ref<Expense[]>([])
 
-onMounted(async () => {
-  expenses.value = await expenseStore.getAllExpenses()
-})
+const expenseColumns = ref([
+  { field: 'expenseName', header: 'Expanse Name' },
+  { field: 'value', header: 'Value' },
+  { field: 'category', header: 'Category' },
+  { field: 'recurrence', header: 'Recurrence' },
+  { field: 'initialDate', header: 'Initial Date' },
+  { field: 'finalDate', header: 'Final Date' }
+])
 
 const openModal = (expense: Expense, isEditable: Boolean) => {
   dialog.open(CreateExpenseModalContent, {
@@ -35,13 +40,18 @@ const openModal = (expense: Expense, isEditable: Boolean) => {
   })
 }
 
+onMounted(async () => {
+  expenses.value = await expenseStore.getAllExpenses()
+})
+
 </script>
 
 <template>
   <main>
     <h1>Expenses</h1>
     <Datatable 
-      :columns="expenses" 
+      :columns="expenseColumns" 
+      :rows="expenses"
       viewName="Expenses"
       @open-modal="openModal"
     />

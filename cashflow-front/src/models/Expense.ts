@@ -7,6 +7,7 @@ export enum Recurrence {
 }
 
 export default interface Expense {
+  Id: string,
   expenseName: string;
   value: number;
   category: string;

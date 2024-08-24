@@ -5,7 +5,6 @@ const handleError = (error: string) => {
 }
 
 const handleSuccess = (message: string) => {
-  console.log(message)
   toast.success(message, {
     position: toast.POSITION.BOTTOM_RIGHT,
   } as ToastOptions);
