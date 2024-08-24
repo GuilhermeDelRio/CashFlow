@@ -10,6 +10,17 @@ export const separateCamelCase = (str: string) => {
   return str.replace(/([a-z])([A-Z])/g, '$1 $2');
 }
 
-export const getRecurrenceOptions = () => {
-  return Object.values(Recurrence);
+export const parseRecurrence = (recurrence: string) => {
+  switch (recurrence.toUpperCase()) {
+    case "DAILY":
+      return Recurrence.DAILY;
+    case "WEEKLY":
+      return Recurrence.WEEKLY;
+    case "MONTHLY":
+      return Recurrence.MONTHLY;
+    case "QUARTERLY":
+      return Recurrence.QUARTERLY;
+    case "YEARLY":
+      return Recurrence.YEARLY;
+  }
 }

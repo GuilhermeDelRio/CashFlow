@@ -16,10 +16,10 @@ onMounted(async () => {
 const openModal = () => {
   dialog.open(CreateExpenseModalContent, {
     props: {
-      header: ' ',
+      header: 'Create Expense',
       style: {
         width: '50vw',
-        height: '60vh',
+        height: '50vh',
       },
       dismissableMask: true,
       modal: true,

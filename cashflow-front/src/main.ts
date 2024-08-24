@@ -6,6 +6,7 @@ import Aura from '@primevue/themes/aura';
 import DialogService from 'primevue/dialogservice';
 import Vueform from '@vueform/vueform';
 import vueformConfig from '../vueform.config';
+import ToastService from 'primevue/toastservice';
 import App from './App.vue';
 import 'primeicons/primeicons.css'
 import './style.scss';
@@ -17,6 +18,7 @@ const app = createApp(App);
 app.use(router);
 app.use(pinia);
 app.use(Vueform, vueformConfig)
+app.use(ToastService);
 
 app.use(PrimeVue, {
   theme: {

@@ -1,5 +1,4 @@
 import { defineStore } from "pinia";
-// import { useFetch } from "../composables/crudComposable";
 import Expense from "../models/Expense";
 import httpRequestService from "../api/httpRequestService";
 
@@ -9,9 +8,13 @@ export const useExpensesStore = defineStore('expenses', {
   }),
   actions: {
     async getAllExpenses(): Promise<Expense[]> {
-      const response = await httpRequestService.get(('/Expense/GetAllExpenses'));
+      const response = await httpRequestService.get('/Expense/GetAllExpenses', 'Expense');
       this.expenses = response;
       return this.expenses;
+    },
+    async postExpense(expense: Expense): Promise<Expense> {
+      const response = await httpRequestService.post('/Expense/CreateExpense', expense, 'Expense');	
+      return response;
     }
   }
 });

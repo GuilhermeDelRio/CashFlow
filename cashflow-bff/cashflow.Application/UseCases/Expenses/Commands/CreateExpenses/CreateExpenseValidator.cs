@@ -21,7 +21,6 @@ public class CreateExpenseValidator : AbstractValidator<CreateExpenseRequest>
             .NotEmpty();
 
         RuleFor(x => x.Recurrence)
-            .IsInEnum()
             .NotEmpty();
 
         RuleFor(x => x.InitialDate)

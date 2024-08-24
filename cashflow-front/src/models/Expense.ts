@@ -1,16 +1,16 @@
 export enum Recurrence {
-  DAILY = "DAILY",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-  QUARTERLY = "QUARTERLY",
-  YEARLY = "YEARLY",
+  DAILY,
+  WEEKLY,
+  MONTHLY,
+  QUARTERLY,
+  YEARLY
 }
 
 export default interface Expense {
-  ExpenseName: string;
-  Value: number;
-  Category: string;
-  Recurrence: Recurrence;
-  InitialDate: Date;
-  FinalDate: Date;
+  expenseName: string;
+  value: number;
+  category: string;
+  recurrence: Recurrence;
+  initialDate: Date;
+  finalDate: Date;
 }
