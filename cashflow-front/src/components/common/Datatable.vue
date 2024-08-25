@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useConfirm } from 'primevue/useconfirm'
+import ConfirmDialog from 'primevue/confirmdialog'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Toolbar from 'primevue/toolbar'
@@ -14,11 +16,35 @@ defineProps({
   viewName: String
 })
 
+const confirm = useConfirm()
+
 const emits = defineEmits(['open-modal', 'delete-item'])
+
+const confirmDelete = (itemId: string) => {
+  confirm.require({
+    message: 'Do you want to delete this record?',
+    header: 'Are you sure?',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger'
+    },
+    accept: () => {
+      emits('delete-item', itemId)
+    }
+  })
+}
 
 </script>
 
 <template>
+  <ConfirmDialog />
   <div class="datable-container">
     <Toolbar>
       <template #start>
@@ -77,7 +103,7 @@ const emits = defineEmits(['open-modal', 'delete-item'])
           />
 
           <Button 
-            @click="$emit('delete-item', slotProps.data.id)"
+            @click="confirmDelete(slotProps.data.id)"
             icon="pi pi-trash" 
             outlined 
             rounded 

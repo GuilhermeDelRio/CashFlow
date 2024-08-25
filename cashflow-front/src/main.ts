@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Vue3Toastify, { type ToastContainerOptions } from 'vue3-toastify'
+import ConfirmationService from 'primevue/confirmationservice'
 import router from './routes'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
@@ -27,6 +28,7 @@ app.use(PrimeVue, {
   }
 })
 
+app.use(ConfirmationService);
 app.use(DialogService)
 
 app.use(Vue3Toastify, {
