@@ -39,6 +39,10 @@ const openModal = (expense: Expense, isEditable: Boolean) => {
   })
 }
 
+const deleteSingleExpense = async (expenseId: string) => {
+  await expenseStore.deleteSingleExpense(expenseId)
+}
+
 onMounted(async () => {
   await expenseStore.getAllExpenses()
 })
@@ -55,6 +59,7 @@ const expenses = computed(() => expenseStore.expenses)
       :rows="expenses"
       viewName="Expenses"
       @open-modal="openModal"
+      @delete-item="deleteSingleExpense"
     />
   </main>
 </template>

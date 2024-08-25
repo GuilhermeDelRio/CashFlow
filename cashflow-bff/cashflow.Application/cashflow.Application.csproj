@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Expenses\Commands\DeleteExpenses\" />
     <Folder Include="UseCases\Expenses\Queries\GetExpensesById\" />
   </ItemGroup>
 

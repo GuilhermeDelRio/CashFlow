@@ -25,6 +25,10 @@ export const useExpensesStore = defineStore('expenses', {
         Object.assign(this.expenses[index], response)
       }
       return response
+    },
+    async deleteSingleExpense(expenseId: string): Promise<void> {
+      await httpRequestService.deleteSingleItem(`/Expense/DeleteExpense/${expenseId}`, 'Expense')
+      this.expenses = this.expenses.filter((e) => e.id !== expenseId)
     }
   }
 })

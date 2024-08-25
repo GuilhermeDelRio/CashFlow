@@ -42,8 +42,19 @@ const put = async (url: string, data:Object, entity: string, config = {}) => {
   }
 }
 
+const deleteSingleItem = async (url: string, entity: string, config = {}) => {
+  try {
+    await api.delete(url, config)
+    handleSuccess(`${entity} deleted successfully`)
+  } catch (error: any) {
+    handleError(error)
+    throw error
+  }
+}
+
 export default {
   get,
   post,
-  put
+  put,
+  deleteSingleItem
 }

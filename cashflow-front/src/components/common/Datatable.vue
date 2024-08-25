@@ -14,7 +14,7 @@ defineProps({
   viewName: String
 })
 
-const emits = defineEmits(['open-modal'])
+const emits = defineEmits(['open-modal', 'delete-item'])
 
 </script>
 
@@ -76,7 +76,14 @@ const emits = defineEmits(['open-modal'])
             class="mr-2" 
           />
 
-          <Button icon="pi pi-trash" outlined rounded severity="danger" />
+          <Button 
+            @click="$emit('delete-item', slotProps.data.id)"
+            icon="pi pi-trash" 
+            outlined 
+            rounded 
+            severity="danger" 
+          />
+
         </template>
       </Column>
     </DataTable>
