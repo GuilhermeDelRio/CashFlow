@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
+import { FilterMatchMode } from '@primevue/core/api'
 import ConfirmDialog from 'primevue/confirmdialog'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
@@ -20,6 +21,9 @@ defineProps({
 const confirm = useConfirm()
 const selectedProducts = ref()
 const dt = ref()
+const filters = ref({
+  'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+})
 
 const emits = defineEmits(['open-modal', 'delete-item', 'bulk-delete'])
 
@@ -110,6 +114,7 @@ const exportCSV = () => {
       :resizable-columns="true"
       :paginator="true"
       :rows="5"
+      :filters="filters"
       paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
       :rowsPerPageOptions="[5, 10, 25]"
       :currentPageReportTemplate="`Showing {first} to {last} of {totalRecords} ${viewName?.toLowerCase()}`"
@@ -121,8 +126,8 @@ const exportCSV = () => {
             <InputIcon>
               <i class="pi pi-search" />
             </InputIcon>
-            <InputText placeholder="Search..." />
-          </IconField>
+            <InputText v-model="filters['global'].value" placeholder="Search..." />
+        </IconField>
         </div>
       </template>
       
