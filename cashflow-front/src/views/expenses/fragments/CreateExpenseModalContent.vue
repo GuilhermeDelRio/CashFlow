@@ -22,6 +22,7 @@ onMounted(() => {
   if (params.selectedExpense) {
     isEditable.value = true
     data.value = {
+      id: params.selectedExpense.id,
       expense_name: params.selectedExpense.expenseName,
       expense_amount: params.selectedExpense.value,
       category: { name: params.selectedExpense.category },
@@ -48,6 +49,7 @@ const recurrenceList = ref([
 ])
 
 const data = ref({
+  id: '',
   expense_name: '',
   expense_amount: 0,
   category: { name: '' },
@@ -91,7 +93,8 @@ const handleSubmit = async () => {
   } as Expense
 
   if (isEditable.value) {
-    console.log('Edit')
+    request.id = data.value.id
+    expenseStore.updateExpense(request)
   }
   else {
     expenseStore.postExpense(request)
@@ -102,6 +105,7 @@ const handleSubmit = async () => {
 
 const resetForm = () => {
   data.value = {
+    id: '',
     expense_name: '',
     expense_amount: 0,
     category: { name: '' },

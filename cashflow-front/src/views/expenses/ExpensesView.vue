@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useDialog } from 'primevue/usedialog'
 import { useExpensesStore } from '../../store/expensesStore'
 import Datatable from '../../components/common/Datatable.vue'
@@ -8,10 +8,9 @@ import CreateExpenseModalContent from './fragments/CreateExpenseModalContent.vue
 
 const dialog = useDialog()
 const expenseStore = useExpensesStore()
-const expenses = ref<Expense[]>([])
 
 const expenseColumns = ref([
-  { field: 'expenseName', header: 'Expanse Name' },
+  { field: 'expenseName', header: 'Expense Name' },
   { field: 'value', header: 'Value' },
   { field: 'category', header: 'Category' },
   { field: 'recurrence', header: 'Recurrence' },
@@ -41,8 +40,10 @@ const openModal = (expense: Expense, isEditable: Boolean) => {
 }
 
 onMounted(async () => {
-  expenses.value = await expenseStore.getAllExpenses()
+  await expenseStore.getAllExpenses()
 })
+
+const expenses = computed(() => expenseStore.expenses)
 
 </script>
 
@@ -55,7 +56,6 @@ onMounted(async () => {
       viewName="Expenses"
       @open-modal="openModal"
     />
-
   </main>
 </template>
 

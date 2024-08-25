@@ -31,7 +31,19 @@ const post = async (url: string, data:Object, entity: string, config = {}) => {
   }
 }
 
+const put = async (url: string, data:Object, entity: string, config = {}) => {
+  try {
+    const response = await api.put(url, data, config)
+    handleSuccess(`${entity} updated successfully`)
+    return response.data
+  } catch (error: any) {
+    handleError(error)
+    throw error
+  }
+}
+
 export default {
   get,
-  post
+  post,
+  put
 }
