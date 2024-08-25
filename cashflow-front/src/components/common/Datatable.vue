@@ -18,7 +18,8 @@ defineProps({
 })
 
 const confirm = useConfirm()
-const selectedProducts = ref();
+const selectedProducts = ref()
+const dt = ref()
 
 const emits = defineEmits(['open-modal', 'delete-item', 'bulk-delete'])
 
@@ -64,6 +65,10 @@ const bulkDelete = () => {
   })
 }
 
+const exportCSV = () => {
+  dt.value.exportCSV()
+}
+
 </script>
 
 <template>
@@ -89,11 +94,17 @@ const bulkDelete = () => {
 
       <template #end>
         <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="mr-2" auto />
-        <Button label="Export" icon="pi pi-upload" severity="contrast" />
+        <Button 
+          @click="exportCSV()"
+          label="Export" 
+          icon="pi pi-upload" 
+          severity="contrast" 
+        />
       </template>
     </Toolbar>
 
-    <DataTable 
+    <DataTable
+      ref="dt"
       :value="rows"
       v-model:selection="selectedProducts"
       :resizable-columns="true"

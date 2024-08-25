@@ -53,7 +53,6 @@ const bulkDelete = async (expenseIds: { id: string }[]) => {
   await expenseStore.bulkDeleteExpenses(payload)
 }
 
-
 onMounted(async () => {
   await expenseStore.getAllExpenses()
 })
