@@ -43,6 +43,17 @@ const deleteSingleExpense = async (expenseId: string) => {
   await expenseStore.deleteSingleExpense(expenseId)
 }
 
+const bulkDelete = async (expenseIds: { id: string }[]) => {
+  const ids = expenseIds.map((item) => item.id)
+
+  const payload = {
+    ids: ids,
+  }
+
+  await expenseStore.bulkDeleteExpenses(payload)
+}
+
+
 onMounted(async () => {
   await expenseStore.getAllExpenses()
 })
@@ -60,6 +71,7 @@ const expenses = computed(() => expenseStore.expenses)
       viewName="Expenses"
       @open-modal="openModal"
       @delete-item="deleteSingleExpense"
+      @bulk-delete="bulkDelete"
     />
   </main>
 </template>

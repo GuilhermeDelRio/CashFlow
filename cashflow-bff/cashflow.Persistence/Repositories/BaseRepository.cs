@@ -45,4 +45,18 @@ public class BaseRepository<T> : IBaseRepository<T> where T : AuditableEntity
         entity.DeletedDate = DateTime.UtcNow;
         _context.Remove(entity);
     }
+
+    public async Task BulkDelete(List<Guid> ids, CancellationToken cancellation)
+    {
+        var entities = await _context.Set<T>()
+            .AsNoTracking()
+            .Where(x => ids.Contains(x.Id))
+            .ToListAsync(cancellation);
+
+        if (entities.Any())
+        {
+            _context.Set<T>().RemoveRange(entities);
+            await _context.SaveChangesAsync(cancellation);
+        }
+    }
 }

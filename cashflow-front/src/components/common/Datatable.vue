@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
 import ConfirmDialog from 'primevue/confirmdialog'
 import DataTable from 'primevue/datatable'
@@ -17,8 +18,9 @@ defineProps({
 })
 
 const confirm = useConfirm()
+const selectedProducts = ref();
 
-const emits = defineEmits(['open-modal', 'delete-item'])
+const emits = defineEmits(['open-modal', 'delete-item', 'bulk-delete'])
 
 const confirmDelete = (itemId: string) => {
   confirm.require({
@@ -41,6 +43,27 @@ const confirmDelete = (itemId: string) => {
   })
 }
 
+const bulkDelete = () => {
+  confirm.require({
+    message: 'Do you want to delete the selected records?',
+    header: 'Are you sure?',
+    icon: 'pi pi-info-circle',
+    rejectLabel: 'Cancel',
+    rejectProps: {
+      label: 'Cancel',
+      severity: 'secondary',
+      outlined: true
+    },
+    acceptProps: {
+      label: 'Delete',
+      severity: 'danger'
+    },
+    accept: () => {
+      emits('bulk-delete', selectedProducts.value)
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -55,7 +78,13 @@ const confirmDelete = (itemId: string) => {
           severity="success" 
           class="mr-2" 
         />
-        <Button label="Delete" icon="pi pi-trash" severity="danger" />
+        <Button 
+          @click="bulkDelete"
+          :disabled="!selectedProducts || !selectedProducts.length"
+          label="Delete" 
+          icon="pi pi-trash" 
+          severity="danger" 
+        />
       </template>
 
       <template #end>
@@ -65,10 +94,14 @@ const confirmDelete = (itemId: string) => {
     </Toolbar>
 
     <DataTable 
-      :value="rows" 
+      :value="rows"
+      v-model:selection="selectedProducts"
       :resizable-columns="true"
       :paginator="true"
       :rows="5"
+      paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+      :rowsPerPageOptions="[5, 10, 25]"
+      :currentPageReportTemplate="`Showing {first} to {last} of {totalRecords} ${viewName?.toLowerCase()}`"
     >
       <template #header>
         <div class="seach-input">

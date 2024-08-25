@@ -1,4 +1,5 @@
 ﻿using cashflow.API.Custom;
+using cashflow.Application.UseCases.Expenses.Commands.BulkDeleteExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.DeleteExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.UpdateExpenses;
@@ -70,6 +71,25 @@ public class ExpenseController : CustomReturnController
         {
             var deleteExpenseCommand = new DeleteExpenseCommand { Id = id };
             await _mediator.Send(deleteExpenseCommand, cancellationToken);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return ResultHandler(ex);
+        }
+    }
+
+    [HttpPost("BulkDeleteExpenses", Name = "BulkDeleteExpenses")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> BulkDeleteExpenses(
+        [FromBody] BulkDeleteExpensesCommand bulkDeleteExpensesCommand, 
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _mediator.Send(bulkDeleteExpensesCommand, cancellationToken);
             return NoContent();
         }
         catch (Exception ex)

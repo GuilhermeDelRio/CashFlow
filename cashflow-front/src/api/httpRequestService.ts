@@ -52,9 +52,20 @@ const deleteSingleItem = async (url: string, entity: string, config = {}) => {
   }
 }
 
+const bulkDeleteItems = async (url: string, data: { ids: string[] }, entity: string, config = {}) => {
+  try {
+    await api.post(url, data, config)
+    handleSuccess(`${entity} deleted successfully`)
+  } catch (error: any) {
+    handleError(error)
+    throw error
+  }
+}
+
 export default {
   get,
   post,
   put,
-  deleteSingleItem
+  deleteSingleItem,
+  bulkDeleteItems
 }

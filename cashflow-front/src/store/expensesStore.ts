@@ -29,6 +29,10 @@ export const useExpensesStore = defineStore('expenses', {
     async deleteSingleExpense(expenseId: string): Promise<void> {
       await httpRequestService.deleteSingleItem(`/Expense/DeleteExpense/${expenseId}`, 'Expense')
       this.expenses = this.expenses.filter((e) => e.id !== expenseId)
+    },
+    async bulkDeleteExpenses(payload: { ids: string[] }): Promise<void> {
+      await httpRequestService.bulkDeleteItems('/Expense/BulkDeleteExpenses', payload, 'Expenses')
+      this.expenses = this.expenses.filter((e) => !payload.ids.includes(e.id))
     }
   }
 })
