@@ -1,5 +1,6 @@
 ﻿using cashflow.API.Custom;
 using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
+using cashflow.Application.UseCases.Expenses.Commands.UpdateExpenses;
 using cashflow.Application.UseCases.Expenses.Queries.GetAllExpenses;
 using cashflow.Application.UseCases.Expenses.Reponses;
 using MediatR;
@@ -40,4 +41,22 @@ public class ExpenseController : CustomReturnController
         var response = await _mediator.Send(new GetAllExpensesQuery(), cancellationToken);
         return Ok(response);
     }
+
+    [HttpPut("UpdateExpense", Name = "UpdateExpense")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> UpdateExpense([FromBody] UpdateExpenseCommand updateExpenseCommand, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _mediator.Send(updateExpenseCommand, cancellationToken);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return ResultHandler(ex);
+        }
+    }
+
 }
