@@ -1,6 +1,7 @@
 import { defineStore } from "pinia"
 import Expense from "../models/Expense"
 import httpRequestService from "../api/httpRequestService"
+import { parseRecurrenceToString } from '../util/util'
 
 export const useExpensesStore = defineStore('expenses', {
   state: () => ({
@@ -10,6 +11,9 @@ export const useExpensesStore = defineStore('expenses', {
     async getAllExpenses(): Promise<Expense[]> {
       const response = await httpRequestService.get('/Expense/GetAllExpenses', 'Expense')
       this.expenses = response
+      this.expenses.forEach((e) => {
+        e.recurrence = parseRecurrenceToString(e.recurrence)
+      })
       return this.expenses
     },
     async postExpense(expense: Expense): Promise<Expense> {

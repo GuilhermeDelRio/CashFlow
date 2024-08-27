@@ -11,7 +11,7 @@ export default interface Expense {
   expenseName: string;
   value: number;
   category: string;
-  recurrence: Recurrence;
+  recurrence: string;
   initialDate: Date;
   finalDate: Date;
 }

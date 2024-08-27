@@ -25,7 +25,7 @@ export const parseRecurrence = (recurrence: string) => {
   }
 }
 
-export const parseRecurrenceToString = (recurrence: number) => {
+export const parseRecurrenceToString = (recurrence: any) => {
   switch (recurrence) {
     case 0:
       return "Daily"
