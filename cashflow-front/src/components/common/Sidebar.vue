@@ -31,9 +31,9 @@ const ToggleMenu = () => {
 				<span class="material-symbols-outlined">attach_money</span>
 				<span class="text">Expenses</span>
 			</router-link>
-			<router-link to="/team" class="button">
-				<span class="material-symbols-outlined">group</span>
-				<span class="text">Team</span>
+			<router-link to="/categories" class="button">
+				<span class="material-symbols-outlined">category</span>
+				<span class="text">Categories</span>
 			</router-link>
 			<router-link to="/contact" class="button">
 				<span class="material-symbols-outlined">email</span>

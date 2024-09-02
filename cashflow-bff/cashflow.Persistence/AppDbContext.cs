@@ -13,7 +13,9 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new ExpensesConfig());
+        modelBuilder.ApplyConfiguration(new CategoryConfig());
     }
 
     public DbSet<Expense> Expenses { get; set; }
+    public DbSet<CategoryModel> Categories { get; set; }
 }

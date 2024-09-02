@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router"
 
 // Views
-import DashboardView from '../views/dashboard/DashboardView.vue';
-import Login from '../views/login/LoginView.vue';
-import ExpensesView from "../views/expenses/ExpensesView.vue";
+import DashboardView from '../views/dashboard/DashboardView.vue'
+import Login from '../views/login/LoginView.vue'
+import ExpensesView from "../views/expenses/ExpensesView.vue"
+import CategoriesView from '../views/categories/CategoriesView.vue'
 
 const routes = [
   {
@@ -20,7 +21,12 @@ const routes = [
     path: '/Expenses',
     name: 'Expenses',
     component: ExpensesView
-  }
+  },
+  {
+    path: '/Categories',
+    name: 'categories',
+    component: CategoriesView
+  },
 ]
 
 const router = createRouter({
