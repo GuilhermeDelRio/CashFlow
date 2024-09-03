@@ -67,7 +67,6 @@ const handleSubmit = async () => {
     return
   }
 
-  console.log(data.value)
   const request = {
     id: '',
     expenseName: data.value.expenseName,
