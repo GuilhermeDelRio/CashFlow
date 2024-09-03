@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
-import { useDialog } from 'primevue/usedialog'
+import { ref } from 'vue'
 import { useExpensesStore } from '../../store/expensesStore'
-import Datatable from '../../components/common/Datatable.vue'
-import Expense from '../../models/Expense'
-import CreateExpenseModalContent from './fragments/CreateExpenseModalContent.vue'
+import ExpensesModal from './fragments/ExpensesModal.vue'
+import GenericTableView from '../../components/genericTableView/GenericTableView.vue'
 
-const dialog = useDialog()
 const expenseStore = useExpensesStore()
+const entityName = ref('Expenses')
 
 const expenseColumns = ref([
   { field: 'expenseName', header: 'Expense Name' },
@@ -18,65 +16,15 @@ const expenseColumns = ref([
   { field: 'finalDate', header: 'Final Date' }
 ])
 
-const openModal = (expense: Expense, isEditable: Boolean) => {
-  dialog.open(CreateExpenseModalContent, {
-    props: {
-      header: !isEditable ? 'Create Expense' : 'Edit Expense',
-      style: {
-        width: '50vw',
-        height: '50vh',
-      },
-      dismissableMask: true,
-      modal: true,
-      draggable: false,
-      contentStyle: {
-        'height': '100%',
-      },
-    },
-    data: {
-      selectedExpense: expense
-    }
-  })
-}
-
-const deleteSingleExpense = async (expenseId: string) => {
-  await expenseStore.deleteSingleExpense(expenseId)
-}
-
-const bulkDelete = async (expenseIds: { id: string }[]) => {
-  const ids = expenseIds.map((item) => item.id)
-
-  const payload = {
-    ids: ids,
-  }
-
-  await expenseStore.bulkDeleteExpenses(payload)
-}
-
-onMounted(async () => {
-  await expenseStore.getAllExpenses()
-})
-
-const expenses = computed(() => expenseStore.expenses)
-
 </script>
 
 <template>
-  <main>
-    <h1>Expenses</h1>
-    <Datatable 
-      :columns="expenseColumns" 
-      :rows="expenses"
-      viewName="Expenses"
-      @open-modal="openModal"
-      @delete-item="deleteSingleExpense"
-      @bulk-delete="bulkDelete"
-    />
-  </main>
+  <GenericTableView 
+    :entityName="entityName"
+    :entityStore="expenseStore"
+    :dataColumns="expenseColumns"
+    :modalContent="ExpensesModal"
+  />
 </template>
 
-<style lang="scss">
-h1 {
-  color: var(--lightfont);
-}
-</style>
+<style lang="scss"></style>

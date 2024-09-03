@@ -7,8 +7,13 @@ export const useExpensesStore = defineStore('expenses', {
   state: () => ({
     expenses: [] as Expense[],
   }),
+  getters: {
+    getAllEntity: (state) => {
+      return state.expenses
+    }
+  },
   actions: {
-    async getAllExpenses(): Promise<Expense[]> {
+    async getAll(): Promise<Expense[]> {
       const response = await httpRequestService.get('/Expense/GetAllExpenses', 'Expense')
       this.expenses = response
       this.expenses.forEach((e) => {

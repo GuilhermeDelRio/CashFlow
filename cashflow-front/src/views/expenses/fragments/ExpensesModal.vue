@@ -17,20 +17,14 @@ const expenseStore = useExpensesStore()
 const isEditable = ref(false)
 const dialogRef: any = inject('dialogRef')
 
-onMounted(() => {
-  const params = dialogRef.value.data
-  if (params.selectedExpense) {
-    isEditable.value = true
-    data.value = {
-      id: params.selectedExpense.id,
-      expense_name: params.selectedExpense.expenseName,
-      expense_amount: params.selectedExpense.value,
-      category: { name: params.selectedExpense.category },
-      recurrence: { name: parseRecurrenceToString(params.selectedExpense.recurrence) },
-      initialDate: new Date(params.selectedExpense.initialDate),
-      finalDate: new Date(params.selectedExpense.finalDate)
-    }
-  }
+const data = ref({
+  id: '',
+  expenseName: '',
+  value: 0,
+  category: { name: '' },
+  recurrence: { name: '' },
+  initialDate: new Date(),
+  finalDate: new Date()
 })
 
 const categotyList = ref([
@@ -48,20 +42,10 @@ const recurrenceList = ref([
   {name: 'Yearly'}
 ])
 
-const data = ref({
-  id: '',
-  expense_name: '',
-  expense_amount: 0,
-  category: { name: '' },
-  recurrence: { name: '' },
-  initialDate: new Date(),
-  finalDate: new Date()
-})
-
 const expenseSchema = z.object({
-  expense_name: z.string()
+  expenseName: z.string()
     .min(3, { message: 'Expense name must have at least 3 characters' }),	
-  expense_amount: z.number()
+  value: z.number()
     .min(0.01, { message: 'Expense amount must be greater than 0' }),
   category: z.object({ name: z.string()
     .min(1, { message: 'Category must be selected' }) }),
@@ -83,15 +67,18 @@ const handleSubmit = async () => {
     return
   }
 
+  console.log(data.value)
   const request = {
-    expenseName: data.value.expense_name,
-    value: data.value.expense_amount,
+    id: '',
+    expenseName: data.value.expenseName,
+    value: data.value.value,
     category: data.value.category.name,
     recurrence: parseRecurrence(data.value.recurrence.name),
     initialDate: data.value.initialDate,
     finalDate: data.value.finalDate
   } as Expense
 
+  
   if (isEditable.value) {
     request.id = data.value.id
     expenseStore.updateExpense(request)
@@ -103,11 +90,27 @@ const handleSubmit = async () => {
   resetForm()
 }
 
+onMounted(() => {
+  const params = dialogRef.value.data
+  if (params.selectedItem) {
+    isEditable.value = true
+    data.value = {
+      id: params.selectedItem.id,
+      expenseName: params.selectedItem.expenseName,
+      value: params.selectedItem.value,
+      category: { name: params.selectedItem.category },
+      recurrence: { name: parseRecurrenceToString(params.selectedItem.recurrence) },
+      initialDate: new Date(params.selectedItem.initialDate),
+      finalDate: new Date(params.selectedItem.finalDate)
+    }
+  }
+})
+
 const resetForm = () => {
   data.value = {
     id: '',
-    expense_name: '',
-    expense_amount: 0,
+    expenseName: '',
+    value: 0,
     category: { name: '' },
     recurrence: { name: '' },
     initialDate: new Date(),
@@ -122,28 +125,28 @@ const resetForm = () => {
     <form @submit.prevent="handleSubmit">
       
       <div>
-        <label for="expense_name">Expense name</label>
+        <label for="expenseName">Expense name</label>
         <InputText 
-          v-model="data.expense_name" 
-          id="expense_name" 
+          v-model="data.expenseName" 
+          id="expenseName" 
           fluid 
-          :class="{ 'p-invalid': !!getError('expense_name') }"
+          :class="{ 'p-invalid': !!getError('expenseName') }"
         />
-        <div class="error">{{ getError('expense_name') }}</div>
+        <div class="error">{{ getError('expenseName') }}</div>
       </div>
 
       <div>
-        <label for="expense_amount">Amount</label>
+        <label for="value">Amount</label>
         <InputNumber 
-          v-model="data.expense_amount" 
-          id="expense_amount" 
+          v-model="data.value" 
+          id="value" 
           showButtons 
           mode="currency" 
           currency="BRL" 
           fluid
-          :class="{ 'p-invalid': !!getError('expense_amount') }"
+          :class="{ 'p-invalid': !!getError('value') }"
         />
-        <div class="error">{{ getError('expense_amount') }}</div>
+        <div class="error">{{ getError('value') }}</div>
       </div>
       
       <div class="group-items mb-2">
