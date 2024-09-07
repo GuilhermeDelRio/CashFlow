@@ -15,10 +15,10 @@ public class CreateExpenseValidator : AbstractValidator<CreateExpenseRequest>
             .GreaterThan(0)
             .NotEmpty();
 
-        RuleFor(x => x.Category)
-            .MaximumLength(25)
-            .MinimumLength(3)
-            .NotEmpty();
+        // RuleFor(x => x.Category)
+        //     .MaximumLength(25)
+        //     .MinimumLength(3)
+        //     .NotEmpty();
 
         RuleFor(x => x.Recurrence)
             .NotEmpty();
