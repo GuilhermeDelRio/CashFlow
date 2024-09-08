@@ -2,6 +2,9 @@ import api from './axios'
 import { toast, type ToastOptions } from 'vue3-toastify'
 
 const handleError = (error: string) => {
+  toast.error('Something went wront!', {
+    position: toast.POSITION.BOTTOM_RIGHT,
+  } as ToastOptions);
 }
 
 const handleSuccess = (message: string) => {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useExpensesStore } from '../../store/expensesStore'
 import expenseSchema from './transactionsValidation'
 import useValidation from '../../composables/useValidation'
 import Button from '../ui/button/Button.vue'
@@ -17,6 +18,16 @@ import TextInput from '../formInputs/TextInput.vue'
 import NumberInput from '../formInputs/NumberInput.vue'
 import SelectInput from '../formInputs/SelectInput.vue'
 import DateInput from '../formInputs/DateInput.vue'
+import Expense from '../../models/Expense'
+import { parseRecurrence } from '../../util/util'
+
+const expenseStore = useExpensesStore()
+
+const props = defineProps({
+  entityName: String,
+  isEdit: Boolean,
+  trigger: Object
+})
 
 const data = ref({
   id: '',
@@ -26,12 +37,6 @@ const data = ref({
   recurrence: { name: '' },
   initialDate: new Date(),
   finalDate: new Date()
-})
-
-const props = defineProps({
-  entityName: String,
-  isEdit: Boolean,
-  trigger: Object
 })
 
 const categotyList = ref([
@@ -61,7 +66,26 @@ const handleSubmit = async () => {
     return
   }
 
-  console.log(data.value)
+  const request = {
+    id: '',
+    expenseName: data.value.expenseName,
+    value: data.value.value,
+    category: data.value.category.name,
+    recurrence: parseRecurrence(data.value.recurrence.name),
+    initialDate: data.value.initialDate,
+    finalDate: data.value.finalDate
+  } as Expense
+
+  console.log(request)
+  if (props.isEdit) {
+    request.id = data.value.id
+    expenseStore.updateExpense(request)
+  }
+  else {
+    expenseStore.postExpense(request)
+  }
+
+  console.log('enviado')
 }
 
 const { validate, isValid, getError, scrolltoError } = 
@@ -135,14 +159,18 @@ useValidation(expenseSchema, data, {
             <DateInput 
               v-model="data.initialDate"
               field-name="Initial Date"
+              :class="{ 'border-red-500': !!getError('initialDate') }"
             />
+            <div class="text-red-600">{{ getError('initialDate') }}</div>
           </div>
 
           <div>
             <DateInput
               v-model="data.finalDate"
               field-name="Final Date"
+              :class="{ 'border-red-500': !!getError('finalDate') }"
             />
+            <div class="text-red-600">{{ getError('finalDate') }}</div>
           </div>
         </div>
         <DialogFooter>

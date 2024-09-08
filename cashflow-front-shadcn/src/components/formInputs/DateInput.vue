@@ -43,6 +43,7 @@ const handleDateChange = (date: any) => {
           <Button
             variant="outline"
             :class="cn('w-[220px]', !props.modelValue && 'text-muted-foreground')"
+            type="button"
           >
             <span>{{ props.modelValue ? df.format(props.modelValue) : placeholder }}</span>
             <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
