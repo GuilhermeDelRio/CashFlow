@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import Button from '../../components/ui/button/Button.vue'
 import { Receipt } from 'lucide-vue-next'
-
-const createExpense = () => {
-  console.log('clicked')
-}
+import TransactionsDialog from '../../components/transactionsDialog/TransactionsDialog.vue'
 </script>
 
 <template>
@@ -15,10 +12,14 @@ const createExpense = () => {
     </h1>
 
     <div>
-      <Button @click="createExpense">
-        Create Expense
-        <Receipt class="ml-1"/>
-      </Button>
+      <TransactionsDialog entity-name="Expense" :isEdit="false">
+        <template #trigger>
+          <Button>
+            Create Expense
+            <Receipt class="ml-1" />
+          </Button>
+        </template>
+      </TransactionsDialog>
     </div>
   </div>
 
