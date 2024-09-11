@@ -22,11 +22,6 @@ public class ExpensesConfig : IEntityTypeConfiguration<Expense>
             .HasColumnType("decimal(18,2)")
             .IsRequired();
 
-        builder.Property(x => x.Category)
-            .HasColumnName("Category")
-            .HasColumnType("[NVARCHAR](25)")
-            .IsRequired();
-
         builder.Property(x => x.Recurrence)
             .HasColumnName("Recurrence")
             .HasConversion<string>()
@@ -41,5 +36,10 @@ public class ExpensesConfig : IEntityTypeConfiguration<Expense>
          .HasColumnName("FinalDate")
          .HasColumnType("[DATE]")
          .IsRequired();
+
+        builder.HasOne(e => e.Category)
+            .WithMany()
+            .HasForeignKey(e => e.CategoryId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

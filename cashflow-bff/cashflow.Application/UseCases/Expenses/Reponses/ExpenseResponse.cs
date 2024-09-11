@@ -6,7 +6,7 @@ public sealed record ExpenseResponse(
     Guid Id,
     string ExpenseName,
     decimal Value,
-    string Category,
+    Guid CategoryId,
     Recurrence Recurrence,
     DateTime InitialDate,
     DateTime FinalDate
