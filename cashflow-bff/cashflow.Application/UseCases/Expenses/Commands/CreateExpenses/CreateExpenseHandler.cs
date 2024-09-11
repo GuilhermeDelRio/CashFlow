@@ -4,6 +4,7 @@ using cashflow.Domain.Interfaces;
 using AutoMapper;
 using FluentValidation;
 using cashflow.Application.UseCases.Expenses.Reponses;
+using cashflow.Domain.Exceptions;
 
 namespace cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 
@@ -11,12 +12,15 @@ public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, Expens
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IExpensesRepository _expensesRepository;
+    private readonly ICategoryRepository _categoryRepository;
     private readonly IMapper _mapper;
 
-    public CreateExpenseHandler(IUnitOfWork unitOfWork, IExpensesRepository expensesRepository, IMapper mapper)
+    public CreateExpenseHandler(IUnitOfWork unitOfWork, IExpensesRepository expensesRepository, 
+        ICategoryRepository categoryRepository, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _expensesRepository = expensesRepository;
+        _categoryRepository = categoryRepository;
         _mapper = mapper;
     }
 
@@ -30,6 +34,12 @@ public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, Expens
             throw new ValidationException(validatorResult.Errors);
         }
 
+        var category = await _categoryRepository
+            .GetById(request.CategoryId, cancellationToken);
+
+        if (category == null)
+            throw new NotFoundException("Category not found.");
+        
         var expenses = _mapper.Map<Expense>(request);
 
         _expensesRepository.Create(expenses);

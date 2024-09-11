@@ -4,6 +4,7 @@ using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.DeleteExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.UpdateExpenses;
 using cashflow.Application.UseCases.Expenses.Queries.GetAllExpenses;
+using cashflow.Application.UseCases.Expenses.Queries.GetExpensesById;
 using cashflow.Application.UseCases.Expenses.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -40,8 +41,33 @@ public class ExpenseController : CustomReturnController
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<ExpenseResponse>> GetAllExpenses(CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new GetAllExpensesQuery(), cancellationToken);
-        return Ok(response);
+        try
+        {
+            var response = await _mediator.Send(new GetAllExpensesQuery(), cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+
+            return ResultHandler(ex);
+        }
+    }
+
+    [HttpGet("GetExpenseById", Name = "GetExpenseById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<ExpenseResponse>> GetExpenseById(Guid Id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var expenseCommand = new GetExpenseByIdQuery { Id = Id };
+            var response = await _mediator.Send(expenseCommand, cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+
+            return ResultHandler(ex);
+        }
     }
 
     [HttpPut("UpdateExpense", Name = "UpdateExpense")]
@@ -84,7 +110,7 @@ public class ExpenseController : CustomReturnController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> BulkDeleteExpenses(
-        [FromBody] BulkDeleteExpensesCommand bulkDeleteExpensesCommand, 
+        [FromBody] BulkDeleteExpensesCommand bulkDeleteExpensesCommand,
         CancellationToken cancellationToken)
     {
         try

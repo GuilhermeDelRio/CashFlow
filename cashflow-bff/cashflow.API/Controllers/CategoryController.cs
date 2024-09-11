@@ -4,6 +4,7 @@ using cashflow.Application.UseCases.Category.Commands.CreateCategory;
 using cashflow.Application.UseCases.Category.Commands.DeleteCategory;
 using cashflow.Application.UseCases.Category.Commands.UpdateCategory;
 using cashflow.Application.UseCases.Category.Queries.GetAllCategories;
+using cashflow.Application.UseCases.Category.Queries.GetCategoryById;
 using cashflow.Application.UseCases.Category.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,22 @@ public class CategoryController : CustomReturnController
     {
         var response = await _mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
         return Ok(response);
+    }
+
+    [HttpGet("GetCategoryById", Name = "GetCategoryById")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<CategoryResponse>> GetCategoryById(Guid Id, CancellationToken cancellationToken)
+    {
+        try
+        {
+            var categoryCommand = new GetCategoryByIdQuery { Id = Id };
+            var response = await _mediator.Send(categoryCommand, cancellationToken);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return ResultHandler(ex);
+        }
     }
 
     [HttpPut("UpdateCategory", Name = "UpdateCategory")]

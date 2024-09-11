@@ -16,8 +16,4 @@
     <ProjectReference Include="..\cashflow.Domain\cashflow.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Expenses\Queries\GetExpensesById\" />
-  </ItemGroup>
-
 </Project>

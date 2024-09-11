@@ -1,4 +1,5 @@
 ﻿using cashflow.Application.Reponses;
+using cashflow.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace cashflow.API.Custom;
@@ -13,6 +14,10 @@ public class CustomReturnController : ControllerBase
         switch (ex)
         {
             case NullReferenceException:
+                errorDetailModel.MessageDetail = ex.Message;
+                errorDetailModel.Status = StatusCodes.Status404NotFound;
+                return NotFound(errorDetailModel);
+            case NotFoundException:
                 errorDetailModel.MessageDetail = ex.Message;
                 errorDetailModel.Status = StatusCodes.Status404NotFound;
                 return NotFound(errorDetailModel);
