@@ -1,26 +1,23 @@
-using MediatR;
+using cashflow.Application.Dtos;
 using cashflow.Domain.Entities;
 using cashflow.Domain.Interfaces;
-using AutoMapper;
 using FluentValidation;
-using cashflow.Application.UseCases.Category.Reponses;
+using MediatR;
 
 namespace cashflow.Application.UseCases.Category.Commands.CreateCategory;
 
-public class CreateCategoryHandler : IRequestHandler<CreateCategoryRequest, CategoryResponse>
+public class CreateCategoryHandler : IRequestHandler<CreateCategoryRequest, CategoryDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IMapper _mapper;
 
-    public CreateCategoryHandler(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository, IMapper mapper)
+    public CreateCategoryHandler(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository)
     {
         _unitOfWork = unitOfWork;
         _categoryRepository = categoryRepository;
-        _mapper = mapper;
     }
 
-    public async Task<CategoryResponse> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
+    public async Task<CategoryDto> Handle(CreateCategoryRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateCategoryValidator();
         var validatorResult = await validator.ValidateAsync(request, cancellationToken);
@@ -30,12 +27,16 @@ public class CreateCategoryHandler : IRequestHandler<CreateCategoryRequest, Cate
             throw new ValidationException(validatorResult.Errors);
         }
 
-        var category = _mapper.Map<CategoryModel>(request);
+        var category = new CategoryModel
+        {
+            CategoryName = request.CategoryName,
+            Description = request.Description
+        };
 
         _categoryRepository.Create(category);
 
         await _unitOfWork.Commit(cancellationToken);
 
-        return _mapper.Map<CategoryResponse>(category);
+        return CategoryDto.ToDto(category);
     }
 }

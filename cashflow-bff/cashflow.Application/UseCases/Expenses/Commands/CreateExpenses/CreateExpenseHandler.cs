@@ -1,30 +1,27 @@
-﻿using MediatR;
+﻿using cashflow.Application.Dtos;
 using cashflow.Domain.Entities;
-using cashflow.Domain.Interfaces;
-using AutoMapper;
-using FluentValidation;
-using cashflow.Application.UseCases.Expenses.Reponses;
 using cashflow.Domain.Exceptions;
+using cashflow.Domain.Interfaces;
+using FluentValidation;
+using MediatR;
 
 namespace cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 
-public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, ExpenseResponse>
+public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, ExpenseDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IExpensesRepository _expensesRepository;
     private readonly ICategoryRepository _categoryRepository;
-    private readonly IMapper _mapper;
 
-    public CreateExpenseHandler(IUnitOfWork unitOfWork, IExpensesRepository expensesRepository, 
-        ICategoryRepository categoryRepository, IMapper mapper)
+    public CreateExpenseHandler(IUnitOfWork unitOfWork, IExpensesRepository expensesRepository,
+        ICategoryRepository categoryRepository)
     {
         _unitOfWork = unitOfWork;
         _expensesRepository = expensesRepository;
         _categoryRepository = categoryRepository;
-        _mapper = mapper;
     }
 
-    public async Task<ExpenseResponse> Handle(CreateExpenseRequest request, CancellationToken cancellationToken)
+    public async Task<ExpenseDto> Handle(CreateExpenseRequest request, CancellationToken cancellationToken)
     {
         var validator = new CreateExpenseValidator();
         var validatorResult = await validator.ValidateAsync(request, cancellationToken);
@@ -39,13 +36,21 @@ public class CreateExpenseHandler : IRequestHandler<CreateExpenseRequest, Expens
 
         if (category == null)
             throw new NotFoundException("Category not found.");
-        
-        var expenses = _mapper.Map<Expense>(request);
 
-        _expensesRepository.Create(expenses);
+        var expense = new Expense
+        {
+            ExpenseName = request.ExpenseName,
+            Value = request.Value,
+            Recurrence = request.Recurrence,
+            InitialDate = request.InitialDate,
+            FinalDate = request.FinalDate,
+            CategoryId = request.CategoryId,
+        };
+
+        _expensesRepository.Create(expense);
 
         await _unitOfWork.Commit(cancellationToken);
 
-        return _mapper.Map<ExpenseResponse>(expenses);
+        return ExpenseDto.ToDto(expense);
     }
 }

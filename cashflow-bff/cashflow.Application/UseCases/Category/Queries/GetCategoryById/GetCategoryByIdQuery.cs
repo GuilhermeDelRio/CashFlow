@@ -1,9 +1,9 @@
-﻿using cashflow.Application.UseCases.Category.Reponses;
+﻿using cashflow.Application.Dtos;
 using MediatR;
 
 namespace cashflow.Application.UseCases.Category.Queries.GetCategoryById;
 
-public class GetCategoryByIdQuery : IRequest<CategoryResponse>
+public class GetCategoryByIdQuery : IRequest<CategoryDto>
 {
     public Guid Id { get; set; }
 }

@@ -1,24 +1,30 @@
-﻿using AutoMapper;
-using cashflow.Application.UseCases.Expenses.Reponses;
+﻿using cashflow.Application.Dtos;
 using cashflow.Domain.Interfaces;
 using MediatR;
 
 namespace cashflow.Application.UseCases.Expenses.Queries.GetAllExpenses;
 
-public class GetAllExpensesHandler : IRequestHandler<GetAllExpensesQuery, List<ExpenseResponse>>
+public class GetAllExpensesHandler : IRequestHandler<GetAllExpensesQuery, List<ExpenseDto>>
 {
     private readonly IExpensesRepository _expensesRepository;
-    private readonly IMapper _mapper;
 
-    public GetAllExpensesHandler(IExpensesRepository expensesRepository, IMapper mapper)
+    public GetAllExpensesHandler(IExpensesRepository expensesRepository)
     {
         _expensesRepository = expensesRepository;
-        _mapper = mapper;
     }
 
-    public async Task<List<ExpenseResponse>> Handle(GetAllExpensesQuery request, CancellationToken cancellationToken)
+    public async Task<List<ExpenseDto>> Handle(GetAllExpensesQuery request, CancellationToken cancellationToken)
     {
         var expensesList = await _expensesRepository.GetAll(cancellationToken);
-        return _mapper.Map<List<ExpenseResponse>>(expensesList);
+        return expensesList.Select(ex => new ExpenseDto
+        {
+            Id = ex.Id,
+            ExpenseName = ex.ExpenseName,
+            Value = ex.Value,
+            Recurrence = ex.Recurrence,
+            InitialDate = ex.InitialDate,
+            FinalDate = ex.FinalDate,
+            CategoryId = ex.CategoryId
+        }).ToList();
     }
 }

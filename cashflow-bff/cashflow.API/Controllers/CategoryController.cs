@@ -1,11 +1,11 @@
 using cashflow.API.Custom;
+using cashflow.Application.Dtos;
 using cashflow.Application.UseCases.Category.Commands.BulkDeleteCategory;
 using cashflow.Application.UseCases.Category.Commands.CreateCategory;
 using cashflow.Application.UseCases.Category.Commands.DeleteCategory;
 using cashflow.Application.UseCases.Category.Commands.UpdateCategory;
 using cashflow.Application.UseCases.Category.Queries.GetAllCategories;
 using cashflow.Application.UseCases.Category.Queries.GetCategoryById;
-using cashflow.Application.UseCases.Category.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ public class CategoryController : CustomReturnController
     }
 
     [HttpPost("CreateCategory", Name = "CreateCategory")]
-    public async Task<ActionResult<CategoryResponse>> Create
+    public async Task<ActionResult<CategoryDto>> Create
         ([FromBody] CreateCategoryRequest request, CancellationToken cancellationToken)
     {
         try
@@ -39,7 +39,7 @@ public class CategoryController : CustomReturnController
 
     [HttpGet("GetAllCategories", Name = "GetAllCategories")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<CategoryResponse>> GetAllCategories(CancellationToken cancellationToken)
+    public async Task<ActionResult<CategoryDto>> GetAllCategories(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetAllCategoriesQuery(), cancellationToken);
         return Ok(response);
@@ -47,7 +47,7 @@ public class CategoryController : CustomReturnController
 
     [HttpGet("GetCategoryById", Name = "GetCategoryById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<CategoryResponse>> GetCategoryById(Guid Id, CancellationToken cancellationToken)
+    public async Task<ActionResult<CategoryDto>> GetCategoryById(Guid Id, CancellationToken cancellationToken)
     {
         try
         {
@@ -101,7 +101,7 @@ public class CategoryController : CustomReturnController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult> BulkDeleteCategories(
-        [FromBody] BulkDeleteCategoryCommand bulkDeleteCategoryCommand, 
+        [FromBody] BulkDeleteCategoryCommand bulkDeleteCategoryCommand,
         CancellationToken cancellationToken)
     {
         try

@@ -1,4 +1,4 @@
-﻿using cashflow.Application.UseCases.Expenses.Reponses;
+﻿using cashflow.Application.Dtos;
 using cashflow.Domain.Enums;
 using MediatR;
 
@@ -11,4 +11,4 @@ public sealed record CreateExpenseRequest(
     Recurrence Recurrence,
     DateTime InitialDate,
     DateTime FinalDate
-) : IRequest<ExpenseResponse>;
+) : IRequest<ExpenseDto>;

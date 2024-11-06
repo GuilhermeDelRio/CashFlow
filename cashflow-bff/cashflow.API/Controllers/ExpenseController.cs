@@ -1,11 +1,11 @@
 ﻿using cashflow.API.Custom;
+using cashflow.Application.Dtos;
 using cashflow.Application.UseCases.Expenses.Commands.BulkDeleteExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.CreateExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.DeleteExpenses;
 using cashflow.Application.UseCases.Expenses.Commands.UpdateExpenses;
 using cashflow.Application.UseCases.Expenses.Queries.GetAllExpenses;
 using cashflow.Application.UseCases.Expenses.Queries.GetExpensesById;
-using cashflow.Application.UseCases.Expenses.Reponses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +23,7 @@ public class ExpenseController : CustomReturnController
     }
 
     [HttpPost("CreateExpense", Name = "CreateExpense")]
-    public async Task<ActionResult<ExpenseResponse>> Create
+    public async Task<ActionResult<ExpenseDto>> Create
         ([FromBody] CreateExpenseRequest request, CancellationToken cancellationToken)
     {
         try
@@ -39,7 +39,7 @@ public class ExpenseController : CustomReturnController
 
     [HttpGet("GetAllExpenses", Name = "GetAllExpenses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ExpenseResponse>> GetAllExpenses(CancellationToken cancellationToken)
+    public async Task<ActionResult<ExpenseDto>> GetAllExpenses(CancellationToken cancellationToken)
     {
         try
         {
@@ -55,7 +55,7 @@ public class ExpenseController : CustomReturnController
 
     [HttpGet("GetExpenseById", Name = "GetExpenseById")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<ActionResult<ExpenseResponse>> GetExpenseById(Guid Id, CancellationToken cancellationToken)
+    public async Task<ActionResult<ExpenseDto>> GetExpenseById(Guid Id, CancellationToken cancellationToken)
     {
         try
         {

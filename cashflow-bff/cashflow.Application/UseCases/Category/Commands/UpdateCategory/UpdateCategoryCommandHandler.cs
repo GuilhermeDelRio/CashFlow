@@ -1,4 +1,3 @@
-using AutoMapper;
 using cashflow.Domain.Interfaces;
 using MediatR;
 
@@ -8,13 +7,11 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 {
     private readonly IUnitOfWork _unitOfWork;
     private ICategoryRepository _categoryRepository;
-    private IMapper _mapper;
 
-    public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository, IMapper mapper)
+    public UpdateCategoryCommandHandler(IUnitOfWork unitOfWork, ICategoryRepository categoryRepository)
     {
         _unitOfWork = unitOfWork;
         _categoryRepository = categoryRepository;
-        _mapper = mapper;
     }
 
     public async Task<Unit> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
@@ -24,7 +21,9 @@ public class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategoryComman
 
         if (categoryToUpdate == null) throw new NullReferenceException();
 
-        _mapper.Map(request, categoryToUpdate);
+        categoryToUpdate.CategoryName = request.CategoryName;
+        categoryToUpdate.Description = request.Description;
+
         _categoryRepository.Update(categoryToUpdate);
 
         await _unitOfWork.Commit(cancellationToken);
